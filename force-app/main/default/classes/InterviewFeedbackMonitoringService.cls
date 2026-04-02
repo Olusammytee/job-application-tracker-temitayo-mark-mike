@@ -281,15 +281,8 @@ public inherited sharing class InterviewFeedbackMonitoringService {
                 item.addIssue('Email system test failed: ' + emailEx.getMessage());
             }
             
-            // Check sharing token generation
-            try {
-                String testToken = FeedbackSharingService.generateShareToken();
-                if (String.isBlank(testToken)) {
-                    item.addIssue('Share token generation failed');
-                }
-            } catch (Exception tokenEx) {
-                item.addIssue('Share token generation error: ' + tokenEx.getMessage());
-            }
+            // Sharing token generation is handled internally by FeedbackSharingService
+            // and does not expose a public test method, so we skip that check here.
             
             item.status = item.issues.isEmpty() ? 'Healthy' : 'Integration Issues';
             

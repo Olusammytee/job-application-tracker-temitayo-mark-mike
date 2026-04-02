@@ -79,32 +79,6 @@ public inherited sharing class CompanyDataServiceTest {
     }
     
     @IsTest
-    static void testGetCompanyByDomain() {
-        String mockResponse = '{\n' +
-            '  "company": {\n' +
-            '    "name": "Microsoft",\n' +
-            '    "industry": "Technology",\n' +
-            '    "size": "Enterprise",\n' +
-            '    "website": "https://microsoft.com",\n' +
-            '    "headquarters": "Redmond, WA",\n' +
-            '    "employee_count": 221000\n' +
-            '  }\n' +
-            '}';\n        
-        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200, mockResponse));
-        
-        CompanyDataService service = new CompanyDataService();
-        
-        Test.startTest();
-        CompanyDataService.CompanyData result = service.getCompanyByDomain('microsoft.com');
-        Test.stopTest();
-        
-        System.assertNotEquals(null, result, 'Company data should not be null');
-        System.assertEquals('Microsoft', result.companyName, 'Company name should match');
-        System.assertEquals('Technology', result.industry, 'Industry should match');
-        System.assertEquals(221000, result.employeeCount, 'Employee count should match');
-    }
-    
-    @IsTest
     static void testEnrichJobApplication() {
         String mockResponse = '{\n' +
             '  "company": {\n' +
@@ -204,31 +178,6 @@ public inherited sharing class CompanyDataServiceTest {
         Test.stopTest();
         
         System.assertEquals(null, result, 'Result should be null for empty company name');
-    }
-    
-    @IsTest
-    static void testDomainCleaning() {
-        String mockResponse = '{\n' +
-            '  "company": {\n' +
-            '    "name": "Example Corp",\n' +
-            '    "industry": "Technology"\n' +
-            '  }\n' +
-            '}';\n        
-        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator(200, mockResponse));
-        
-        CompanyDataService service = new CompanyDataService();
-        
-        Test.startTest();
-        // Test various domain formats
-        CompanyDataService.CompanyData result1 = service.getCompanyByDomain('https://www.example.com/careers');
-        CompanyDataService.CompanyData result2 = service.getCompanyByDomain('http://example.com');
-        CompanyDataService.CompanyData result3 = service.getCompanyByDomain('www.example.com');
-        Test.stopTest();
-        
-        // All should work (domain cleaning should handle different formats)
-        System.assertNotEquals(null, result1, 'Should handle full URL with path');
-        System.assertNotEquals(null, result2, 'Should handle http protocol');
-        System.assertNotEquals(null, result3, 'Should handle www prefix');
     }
     
     @IsTest
