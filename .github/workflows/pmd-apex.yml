@@ -1,0 +1,48 @@
+name: PMD Apex Static Analysis
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "force-app/main/default/classes/**/*.cls"
+      - "force-app/main/default/triggers/**/*.trigger"
+      - "pmd-ruleset.xml"
+      - ".github/workflows/pmd-apex.yml"
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  pmd-apex:
+    name: Run PMD Apex
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Run PMD against changed Apex
+        id: pmd
+        uses: pmd/pmd-github-action@v2
+        env:
+          PMD_APEX_ROOT_DIRECTORY: .
+        with:
+          sourcePath: force-app/main/default
+          rulesets: pmd-ruleset.xml
+          analyzeModifiedFilesOnly: true
+          createGitHubAnnotations: true
+          uploadSarifReport: true
+
+      - name: Fail on PMD violations
+        if: ${{ steps.pmd.outputs.violations != '0' }}
+        run: |
+          echo "PMD found ${{ steps.pmd.outputs.violations }} Apex violation(s)."
+          exit 1
