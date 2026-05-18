@@ -25,14 +25,26 @@ Before installing the Interview Feedback Tracker, ensure:
 ### Deployment Steps
 
 #### 1. Deploy Core Components
-```powershell
-# Run the deployment script
+```bash
+# Cross-platform npm path
+npm run deploy:feedback
+
+# macOS/Linux/WSL helper
+scripts/deploy-interview-feedback-tracker.sh "YourOrgAlias"
+
+# Windows PowerShell helper
 .\scripts\deploy-interview-feedback-tracker.ps1 -TargetOrg "YourOrgAlias"
 ```
 
 #### 2. Validate Deployment
-```powershell
-# Validate all components were deployed successfully
+```bash
+# Cross-platform npm dry-run path
+npm run validate:feedback
+
+# macOS/Linux/WSL helper
+scripts/validate-deployment.sh "YourOrgAlias"
+
+# Windows PowerShell helper
 .\scripts\validate-deployment.ps1 -TargetOrg "YourOrgAlias"
 ```
 
