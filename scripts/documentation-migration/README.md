@@ -2,6 +2,8 @@
 
 Automated tool to migrate markdown documentation files to Salesforce Knowledge Base articles.
 
+This utility explains the repository's TypeScript language footprint in GitHub. It is intentional project tooling for documentation and Salesforce Knowledge migration, not part of the main Salesforce application runtime.
+
 ## Features
 
 - 🚀 **Automated Migration**: Convert all markdown files to Knowledge articles with one command
