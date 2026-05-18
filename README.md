@@ -159,8 +159,9 @@ The **Progress Tracking** section below is the single source of truth for curren
 
 ### **Quick Setup**
 ```bash
-# 1. Navigate to project
-cd "C:\Users\tayof\Documents\job-application-tracker-temitayo-mark-mike"
+# 1. Clone and enter the project
+git clone https://github.com/Olusammytee/job-application-tracker-temitayo-mark-mike.git
+cd job-application-tracker-temitayo-mark-mike
 
 # 2. Open in VS Code  
 code .
@@ -169,13 +170,13 @@ code .
 npm install
 
 # 4. Authorize your org
-sf org login web --alias myCapstoneOrg
+npm run org:login
 
-# 5. Deploy metadata
-sf project deploy start --source-dir force-app/main/default
+# 5. Deploy metadata and assign permissions
+npm run setup:complete
 
 # 6. Open Salesforce to test
-sf org open
+npm run org:open
 ```
 
 **For detailed setup instructions, see [Quick Start Guide](QUICK_START.md)**

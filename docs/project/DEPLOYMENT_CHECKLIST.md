@@ -7,7 +7,7 @@
 - [ ] Job Application Tracker successfully deployed and functional
 - [ ] Sufficient data storage space (estimate 10MB per 1000 feedback records)
 - [ ] Administrator access to target org
-- [ ] PowerShell or command line access for deployment scripts
+- [ ] Terminal access for npm scripts, shell scripts, or PowerShell helpers
 
 ### Environment Preparation
 - [ ] Backup existing org data and metadata
@@ -19,7 +19,7 @@
 ## Deployment Process
 
 ### Phase 1: Core Infrastructure
-- [ ] Run deployment script: `.\scripts\deploy-interview-feedback-tracker.ps1 -TargetOrg "YourOrg"`
+- [ ] Run deployment script: `npm run deploy:feedback`, `scripts/deploy-interview-feedback-tracker.sh "YourOrg"`, or `.\scripts\deploy-interview-feedback-tracker.ps1 -TargetOrg "YourOrg"`
 - [ ] Verify custom objects created successfully
 - [ ] Confirm all fields and relationships are in place
 - [ ] Check object-level permissions and sharing settings
@@ -51,7 +51,7 @@
 ## Post-Deployment Validation
 
 ### Automated Validation
-- [ ] Run validation script: `.\scripts\validate-deployment.ps1 -TargetOrg "YourOrg"`
+- [ ] Run validation script: `npm run validate:feedback`, `scripts/validate-deployment.sh "YourOrg"`, or `.\scripts\validate-deployment.ps1 -TargetOrg "YourOrg"`
 - [ ] Execute comprehensive validation: `scripts\apex\validate-deployment-comprehensive.apex`
 - [ ] Review all validation results and address any failures
 - [ ] Confirm all test classes pass

@@ -1,44 +1,38 @@
 # Quick Start Commands for Capstone Project
 
-# Copy and paste these commands one by one in Command Prompt or VS Code Terminal
+# These commands work from macOS, Linux, Windows PowerShell, Git Bash, WSL, or VS Code Terminal.
 
-# 1. Navigate to your project
-cd "C:\Users\tayof\Documents\job-application-tracker-temitayo-mark-mike"
+# 1. Clone and enter the project
+git clone https://github.com/Olusammytee/job-application-tracker-temitayo-mark-mike.git
+cd job-application-tracker-temitayo-mark-mike
 
 # 2. Open VS Code
 code .
 
-# 3. Install project dependencies (run in VS Code terminal)
+# 3. Install project dependencies
 npm install
 
 # 4. Authorize your capstone org (will open browser)
-sf org login web --alias myCapstoneOrg --instance-url https://login.salesforce.com
+npm run org:login
 # Use credentials from private-learning/org-configuration/capstone-org-credentials.md
 
-# 5. Set as default org
-sf config set target-org=myCapstoneOrg
+# 5. Deploy Job Application metadata and assign permissions
+npm run setup:complete
 
 # 6. Verify connection
-sf org display
+npm run org:status
 
-# 7. Deploy Job Application metadata
-sf project deploy start --source-dir force-app/main/default
+# 7. Open Salesforce to test
+npm run org:open
 
-# 8. Assign permissions
-sf org assign permset --name Job_Application_Manager
-
-# 9. Open Salesforce to test
-sf org open
-
-# 10. Create feature branch
-git checkout -b feature/temitayo-data-model
-
-# 11. Commit initial setup
-git add .
-git commit -m "feat: initial capstone org setup with Job Application object"
-git push origin feature/temitayo-data-model
+# 8. Create a feature branch for your next Linear issue
+git checkout -b your-name/issue-id-short-description
 
 # SUCCESS! 🎉 Your capstone project is ready for development!
 
 # Note: All org credentials are stored privately in private-learning/org-configuration/
 # This directory is excluded from Git commits for security
+
+# Optional helper scripts:
+# - macOS/Linux/WSL: use scripts/*.sh
+# - Windows PowerShell: use scripts/*.ps1
