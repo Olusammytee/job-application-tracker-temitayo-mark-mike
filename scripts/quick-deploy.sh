@@ -17,9 +17,9 @@ run_deploy() {
   echo
 }
 
-run_deploy "[1/4] Deploying Custom Metadata Types..." \
+run_deploy "[1/4] Deploying Tax Configuration custom metadata..." \
   --source-dir force-app/main/default/objects/Tax_Configuration__mdt \
-  --source-dir force-app/main/default/customMetadata \
+  --source-dir force-app/main/default/customMetadata/Tax_Configuration__mdt.*.md-meta.xml \
   --wait 10
 
 run_deploy "[2/4] Deploying Apex classes..." \
