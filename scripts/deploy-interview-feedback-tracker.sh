@@ -40,7 +40,6 @@ while [[ $# -gt 0 ]]; do
 done
 
 echo "Starting Interview Feedback Tracker deployment to org: ${TARGET_ORG}"
-sf config set "target-org=${TARGET_ORG}"
 sf org display --target-org "${TARGET_ORG}" >/dev/null
 
 deploy_component() {
