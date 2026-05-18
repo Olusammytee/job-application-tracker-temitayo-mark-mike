@@ -31,7 +31,6 @@ check_file() {
 }
 
 echo "Validating Interview Feedback Tracker deployment in org: ${TARGET_ORG}"
-sf config set "target-org=${TARGET_ORG}" >/dev/null
 
 echo
 echo "Validating custom objects..."
