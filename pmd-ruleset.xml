@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="Salesforce Apex Quality Gate"
+    xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.github.io/schema/ruleset_2_0_0.xsd">
+    <description>
+        PMD-Apex rules for the Job Application Tracker.
+
+        This ruleset is used by .github/workflows/pmd-apex.yml on pull requests
+        into main. It focuses on high-signal Apex quality categories:
+        best practices, error-prone constructs, performance, and security.
+
+        The workflow currently analyzes modified Apex files only, so new work is
+        held to this quality gate without forcing the whole legacy codebase to be
+        fixed in one PR.
+    </description>
+
+    <rule ref="category/apex/bestpractices.xml" />
+    <rule ref="category/apex/errorprone.xml" />
+    <rule ref="category/apex/performance.xml" />
+    <rule ref="category/apex/security.xml" />
+</ruleset>
