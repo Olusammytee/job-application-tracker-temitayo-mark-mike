@@ -20,7 +20,10 @@ check_file force-app/main/default/appMenus/Job_Application_Tracker_UtilityBar.ap
 
 echo
 echo "Checking Salesforce connection..."
-sf org display --json >/dev/null
+sf org display --json >/dev/null || {
+  echo "Not authenticated. Run npm run org:login first."
+  exit 1
+}
 
 if [[ -f scripts/deep-app-investigation.apex ]]; then
   echo
