@@ -24,6 +24,7 @@ Technical specifications and architecture documentation.
 - [Technical Architecture Guide](reference/TECHNICAL_ARCHITECTURE_GUIDE.md) - System design deep-dive
 - [Architecture Decisions Guide](reference/ARCHITECTURE_DECISIONS_GUIDE.md) - Design choice rationale
 - [Data Dictionary](reference/DATA_DICTIONARY.md) - Custom objects, fields, and relationships
+- [TypeScript Language Share Note](reference/TYPESCRIPT_LANGUAGE_SHARE.md) - Why GitHub reports a TypeScript footprint
 - [Quick Reference Card](reference/QUICK_REFERENCE_CARD.md) - Common commands and shortcuts
 
 ## Project

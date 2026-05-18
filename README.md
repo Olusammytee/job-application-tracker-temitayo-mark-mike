@@ -204,12 +204,16 @@ npm run org:open
 ## 🛠️ Technology Stack
 
 - **Platform**: Salesforce (Developer Edition)
-- **Languages**: Apex, JavaScript, HTML, CSS
+- **Application Languages**: Apex, JavaScript, HTML, CSS
+- **Tooling Language**: TypeScript (documentation migration utility under `scripts/documentation-migration/`)
 - **Components**: Lightning Web Components (LWC)
 - **Automation**: Triggers, Process Builder, Flow
 - **Integration**: REST API callouts (Jooble)
 - **Testing**: Apex Test Classes
 - **Tools**: Salesforce CLI, VS Code, Git
+
+### **GitHub Language Stats**
+GitHub reports a notable TypeScript share because this repo includes a TypeScript-based Salesforce Documentation Migrator in `scripts/documentation-migration/`. That utility migrates markdown documentation into Salesforce Knowledge articles and has its own `package.json`, `tsconfig.json`, source files, and Jest tests. The main Salesforce application remains Apex + Lightning Web Components.
 
 ## 📈 Progress Tracking
 
