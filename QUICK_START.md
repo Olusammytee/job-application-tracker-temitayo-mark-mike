@@ -28,6 +28,11 @@ npm run org:open
 # 8. Create a feature branch for your next Linear issue
 git checkout -b your-name/issue-id-short-description
 
+# 9. Optional: save and publish your initialized setup before starting work
+git add .
+git commit -m "chore: complete local project setup"
+git push -u origin your-name/issue-id-short-description
+
 # SUCCESS! 🎉 Your capstone project is ready for development!
 
 # Note: All org credentials are stored privately in private-learning/org-configuration/
