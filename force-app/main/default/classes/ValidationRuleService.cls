@@ -27,8 +27,8 @@ public with sharing class ValidationRuleService {
     
     // Valid status values
     private static final Set<String> VALID_STATUSES = new Set<String>{
-        'Interested', 'Applied', 'Phone Screen', 'Interview Scheduled', 
-        'Interviewed', 'Offer Received', 'Accepted', 'Rejected', 'Withdrawn'
+        'Saved', 'Applying', 'Applied', 'Interviewing',
+        'Negotiating', 'Accepted', 'Closed'
     };
     
     // Valid location types

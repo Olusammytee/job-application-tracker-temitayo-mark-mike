@@ -229,6 +229,120 @@ public inherited sharing class FeedbackAnalyticsService {
     }
     
     /**
+     * @description Generates dashboard data from a pre-queried list of feedbacks
+     * @param feedbacks List of Interview Feedback records
+     * @return DashboardData Complete dashboard data structure
+     */
+    public static DashboardData generateDashboardFromFeedbacks(List<Interview_Feedback__c> feedbacks) {
+        DashboardData dashboardData = new DashboardData();
+
+        if (feedbacks == null || feedbacks.isEmpty()) {
+            return dashboardData;
+        }
+
+        dashboardData.totalFeedbackRecords = feedbacks.size();
+
+        List<Decimal> allRatings = new List<Decimal>();
+        for (Interview_Feedback__c feedback : feedbacks) {
+            if (feedback.Overall_Rating__c != null) {
+                allRatings.add(feedback.Overall_Rating__c);
+            }
+        }
+
+        if (!allRatings.isEmpty()) {
+            Decimal sum = 0;
+            for (Decimal rating : allRatings) {
+                sum += rating;
+            }
+            dashboardData.averageOverallRating = sum / allRatings.size();
+        }
+
+        Integer successfulInterviews = 0;
+        for (Decimal rating : allRatings) {
+            if (rating >= 4.0) {
+                successfulInterviews++;
+            }
+        }
+        dashboardData.successRate = allRatings.isEmpty() ? 0 : (successfulInterviews * 100.0) / allRatings.size();
+
+        dashboardData.competencyBreakdown = generateCompetencyBreakdown(feedbacks);
+        dashboardData.performanceTrendData = generateTrendChartData(feedbacks);
+        dashboardData.recentFeedback = generateRecentActivity(feedbacks, 5);
+
+        return dashboardData;
+    }
+
+    /**
+     * @description Analyzes competencies from a pre-queried list of feedbacks
+     * @param feedbacks List of Interview Feedback records with competency ratings
+     * @return CompetencyAnalysis Detailed competency analysis
+     */
+    public static CompetencyAnalysis analyzeCompetencies(List<Interview_Feedback__c> feedbacks) {
+        if (feedbacks == null || feedbacks.isEmpty()) {
+            return new CompetencyAnalysis();
+        }
+        return performCompetencyAnalysis(feedbacks);
+    }
+
+    /**
+     * @description Generates a PerformanceTrend from pre-aggregated weekly data
+     * @param trendData List of AggregateResult from CALENDAR_WEEK query
+     * @return PerformanceTrend Trend analysis built from aggregates
+     */
+    public static PerformanceTrend generateTrendFromAggregates(List<AggregateResult> trendData) {
+        PerformanceTrend trend = new PerformanceTrend();
+
+        if (trendData == null || trendData.isEmpty()) {
+            trend.trendDirection = 'Insufficient Data';
+            trend.trendStrength = 0;
+            return trend;
+        }
+
+        List<Decimal> weeklyAverages = new List<Decimal>();
+        List<Integer> timePoints = new List<Integer>();
+
+        for (Integer i = 0; i < trendData.size(); i++) {
+            AggregateResult ar = trendData[i];
+            Object avgOverall = ar.get('avgOverall');
+            if (avgOverall != null) {
+                weeklyAverages.add((Decimal) avgOverall);
+                timePoints.add(i);
+            }
+        }
+
+        if (weeklyAverages.size() < 2) {
+            trend.trendDirection = 'Insufficient Data';
+            trend.trendStrength = 0;
+            trend.dataPoints = weeklyAverages.size();
+            if (!weeklyAverages.isEmpty()) {
+                trend.averageRating = weeklyAverages[0];
+                trend.latestRating = weeklyAverages[0];
+                trend.earliestRating = weeklyAverages[0];
+            }
+            return trend;
+        }
+
+        Decimal slope = calculateSlope(timePoints, weeklyAverages);
+
+        trend.dataPoints = weeklyAverages.size();
+        trend.trendStrength = Math.abs(slope);
+
+        if (slope > IMPROVEMENT_THRESHOLD) {
+            trend.trendDirection = 'Improving';
+        } else if (slope < DECLINE_THRESHOLD) {
+            trend.trendDirection = 'Declining';
+        } else {
+            trend.trendDirection = 'Consistent';
+        }
+
+        trend.averageRating = calculateAverage(weeklyAverages);
+        trend.latestRating = weeklyAverages[weeklyAverages.size() - 1];
+        trend.earliestRating = weeklyAverages[0];
+
+        return trend;
+    }
+
+    /**
      * @description Analyzes trend data to determine performance direction
      * @param feedbackRecords List of feedback records to analyze
      * @return PerformanceTrend Trend analysis results
@@ -623,7 +737,8 @@ public inherited sharing class FeedbackAnalyticsService {
         public List<CompetencyScore> weakestCompetencies { get; set; }
         public List<String> commonStrengths { get; set; }
         public List<String> commonImprovementAreas { get; set; }
-        
+        public Map<String, Object> performanceMetrics { get; set; }
+
         public CompetencyAnalysis() {
             this.strongestCompetencies = new List<CompetencyScore>();
             this.weakestCompetencies = new List<CompetencyScore>();
@@ -659,7 +774,8 @@ public inherited sharing class FeedbackAnalyticsService {
         public Map<String, Decimal> competencyBreakdown { get; set; }
         public List<ChartDataPoint> performanceTrendData { get; set; }
         public List<RecentActivity> recentFeedback { get; set; }
-        
+        public Map<String, Object> queryPerformance { get; set; }
+
         public DashboardData() {
             this.totalApplicationsWithFeedback = 0;
             this.totalFeedbackRecords = 0;
